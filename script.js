@@ -1,6 +1,7 @@
 const state = {
   idList: [],
   idLength: 10,
+  symbols: '0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
 };
 
 /**
@@ -20,11 +21,8 @@ function random(min, max) {
  * @returns сгенерированный id
  */
 function generateId(length) {
-  const symbols =
-    '0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
-
   return [...new Array(length)]
-    .map(() => symbols[random(0, symbols.length - 1)])
+    .map(() => state.symbols[random(0, state.symbols.length - 1)])
     .join('');
 }
 
