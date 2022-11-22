@@ -1,8 +1,7 @@
-const state = {
-  idList: [],
-  idLength: 10,
-  symbols: '0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz',
-};
+const SYMBOLS = '0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+
+let length = 10;
+let list = [];
 
 /**
  * Генерирует случайное число на основе заданного диапазона чисел
@@ -21,9 +20,7 @@ function random(min, max) {
  * @returns сгенерированный id
  */
 function generateId(length) {
-  return [...new Array(length)]
-    .map(() => state.symbols[random(0, state.symbols.length - 1)])
-    .join('');
+  return [...new Array(length)].map(() => SYMBOLS[random(0, SYMBOLS.length - 1)]).join('');
 }
 
 /**
@@ -37,12 +34,12 @@ function generateUniqueId() {
     // Генерируем значение id и проверяем его на уникальность.
     // В случае успеха пушим значение в массив значений id
     const checkId = () => {
-      id = generateId(state.idLength);
+      id = generateId(length);
 
-      if (state.idList.includes(id)) {
+      if (list.includes(id)) {
         checkId();
       } else {
-        state.idList.push(id);
+        list.push(id);
       }
     };
 
@@ -54,7 +51,7 @@ function generateUniqueId() {
     // что все возможные вариации уже существуют в массиве,
     // прибавляем 1 к длине значения id и повторяем попытку
     if (error instanceof RangeError) {
-      state.idLength += 1;
+      length += 1;
       return generateUniqueId();
     }
   }
